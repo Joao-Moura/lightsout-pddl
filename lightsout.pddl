@@ -10,7 +10,8 @@
         :parameters (?x ?y - posicao)
         :precondition ()
         :effect (and
-            (when (not (ta-quebrada ?x ?y)) (not (ta-ligada ?x ?y)))
+            (when (and (not (ta-quebrada ?x ?y)) (ta-ligada ?x ?y)) (not (ta-ligada ?x ?y)))
+            (when (and (not (ta-quebrada ?x ?y)) (not (ta-ligada ?x ?y))) (ta-ligada ?x ?y))
             (forall
                 (?w - posicao)
                 (when
@@ -21,14 +22,10 @@
                         (dec ?y ?w)
                     )
                     (and
-                        (when
-                            (lampada-em ?x ?w)
-                            (not (ta-ligada ?x ?w))
-                        )
-                        (when
-                            (lampada-em ?w ?y)
-                            (not (ta-ligada ?w ?y))
-                        )
+                        (when (and (lampada-em ?x ?w) (ta-ligada ?x ?w)) (not (ta-ligada ?x ?w)))
+                        (when (and (lampada-em ?x ?w) (not (ta-ligada ?x ?w))) (ta-ligada ?x ?w))
+                        (when (and (lampada-em ?w ?y) (ta-ligada ?w ?y)) (not (ta-ligada ?w ?y)))
+                        (when (and (lampada-em ?w ?y) (not (ta-ligada ?w ?y))) (ta-ligada ?w ?y))
                     )
                 )
             )
