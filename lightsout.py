@@ -1,8 +1,7 @@
 import re
 import subprocess
 
-PLANEJADOR = ['/home/prof/ribas/downward/fast-downward.py', '--alias', 'lama-first', '--plan-file', '/tmp/output_a190030879.sas']
-# PLANEJADOR = ['/tmp/dir/software/planners/downward/fast-downward.py', '--alias', 'lama-first', '--plan-file', '/tmp/output_a190030879.sas']
+PLANEJADOR = "<alterar_planejador>".split(' ')
 
 def main():
     entradas = []
@@ -61,47 +60,7 @@ def main():
 
     with open('/tmp/domain.pddl', 'w') as f:
         f.write("""
-            (define (domain lightsout)
-                (:types linha coluna - posicao)
-                (:predicates (inc ?a ?b - posicao)
-                             (ta-ligada ?x - linha ?y - coluna)
-                             (ta-quebrada ?x - linha ?y - coluna))
-
-                (:action APERTAR
-                    :parameters (?x - linha ?y - coluna)
-                    :precondition ()
-                    :effect (and
-                        (when (and (not (ta-quebrada ?x ?y)) (ta-ligada ?x ?y)) (not (ta-ligada ?x ?y)))
-                        (when (and (not (ta-quebrada ?x ?y)) (not (ta-ligada ?x ?y))) (ta-ligada ?x ?y))
-                        (forall
-                            (?w - linha)
-                            (when
-                                (or
-                                    (inc ?x ?w)
-                                    (inc ?w ?x)
-                                )
-                                (and
-                                    (when (ta-ligada ?w ?y) (not (ta-ligada ?w ?y)))
-                                    (when (not (ta-ligada ?w ?y)) (ta-ligada ?w ?y))
-                                )
-                            )
-                        )
-                        (forall
-                            (?w - coluna)
-                            (when
-                                (or
-                                    (inc ?y ?w)
-                                    (inc ?w ?y)
-                                )
-                                (and
-                                    (when (ta-ligada ?x ?w) (not (ta-ligada ?x ?w)))
-                                    (when (not (ta-ligada ?x ?w)) (ta-ligada ?x ?w))
-                                )
-                            )
-                        )
-                    )
-                )
-            )
+            <alterar_dominio>
         """)
 
     subprocess.run(PLANEJADOR + ['/tmp/domain.pddl', '/tmp/problema.pddl'], stdout=subprocess.DEVNULL)
