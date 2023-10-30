@@ -1,12 +1,13 @@
 (define (domain lightsout)
     (:types linha coluna - posicao)
     (:predicates (inc ?a ?b - posicao)
+                 (ja-clicada ?x - linha ?y - coluna)
                  (ta-ligada ?x - linha ?y - coluna)
                  (ta-quebrada ?x - linha ?y - coluna))
 
     (:action APERTAR
         :parameters (?x - linha ?y - coluna)
-        :precondition ()
+        :precondition (not (ja-clicada ?x ?y))
         :effect (and
             (when (and (not (ta-quebrada ?x ?y)) (ta-ligada ?x ?y)) (not (ta-ligada ?x ?y)))
             (when (and (not (ta-quebrada ?x ?y)) (not (ta-ligada ?x ?y))) (ta-ligada ?x ?y))
@@ -36,6 +37,7 @@
                     )
                 )
             )
+            (ja-clicada ?x ?y)
         )
     )
 )
