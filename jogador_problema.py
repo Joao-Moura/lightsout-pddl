@@ -32,12 +32,8 @@ def main():
 
     jogadas = 0
     with open('passos', 'r') as f:
-        for instrucao in f.readlines():
-            if instrucao[0] == ';':
-                continue
-
-            instrucao = instrucao.split(' ')[1:]
-            apertar(mapa, int(instrucao[0][1]), int(instrucao[1][1]))
+        for instrucao in f.readline().split(';'):
+            apertar(mapa, int(instrucao[1]), int(instrucao[4]))
             jogadas += 1
 
     pprint(f'----------------==[Jogada Final ({jogadas})]==----------------')

@@ -42,12 +42,13 @@ def main():
             goals.append(f'(not (ta-ligada x{l} y{c}))')
     goals = '\n'.join(goals)
 
-    with open('/tmp/problema.pddl', 'w') as f:
+    with open('<alterar_local_problema>', 'w') as f:
         f.write(f"""
             (define (problem lightsoutproblem)
                 (:domain lightsout)
                 (:objects {objects})
                 (:init
+                    (verdadeiro)
                     {init}
                 )
                 (:goal
@@ -58,19 +59,22 @@ def main():
             )
             """)
 
-    with open('/tmp/domain.pddl', 'w') as f:
+    with open('<alterar_local_dominio>', 'w') as f:
         f.write("""
             <alterar_dominio>
         """)
 
-    subprocess.run(PLANEJADOR + ['/tmp/domain.pddl', '/tmp/problema.pddl'], stdout=subprocess.DEVNULL)
+    subprocess.run(PLANEJADOR + ['<alterar_local_dominio>', '<alterar_local_problema>'], stdout=subprocess.DEVNULL)
 
     resposta = []
-    with open('/tmp/output_a190030879.sas', 'r') as f:
-        for line in f.readlines()[:-1]:
-            x = re.findall(r'x\d{1,2}?', line)[0][1:]
-            y = re.findall(r'y\d{1,2}?', line)[0][1:]
-            resposta.append(f"({x}, {y})")
+    with open('<alterar_local_sas_plan>', 'r') as f:
+        # for line in f.readlines()[:-1]:
+        for line in f.readlines():
+            x = re.findall(r'x\d{1,2}?', line)
+            y = re.findall(r'y\d{1,2}?', line)
+
+            for valor_x, valor_y in zip(x, y):
+                resposta.append(f"({valor_x[1:]}, {valor_y[1:]})")
 
     print(';'.join(resposta))
 
