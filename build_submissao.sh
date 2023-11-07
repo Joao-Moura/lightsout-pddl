@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# PLANEJADOR="/tmp/dir/software/planners/downward/fast-downward.py --alias lama-first --plan-file /tmp/output_a190030879.sas"
-# PLANEJADOR="/home/prof/ribas/planners/downward/fast-downward.py --alias lama-first --plan-file sas_plan"
-PLANEJADOR="/tmp/dir/software/planners/madagascar/M -o /tmp/output_a190030879.sas"
+PLANEJADOR="/tmp/dir/software/planners/downward/fast-downward.py --search-time-limit 1800 --plan-file /tmp/output_a190030879.sas --alias seq-opt-fdss-2"
+# PLANEJADOR="/home/prof/ribas/planners/downward/fast-downward.py --search-time-limit 3000 --plan-file sas_plan --alias seq-opt-fdss-2"
+# PLANEJADOR="/tmp/dir/software/planners/madagascar/M -o /tmp/output_a190030879.sas -S 1"
 # PLANEJADOR="/home/prof/ribas/planners/madagascar/M -o sas_plan"
 
-ARQUIVO_DOMINIO="/dominios/lightsout_madagascar.pddl"
+ARQUIVO_DOMINIO="./dominios/lightsout.pddl"
 DOMINIO=`cat $ARQUIVO_DOMINIO`
 
 LOCAL_PROBLEMA="/tmp/problema.pddl"
