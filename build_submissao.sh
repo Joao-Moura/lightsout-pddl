@@ -13,7 +13,10 @@ LOCAL_PROBLEMA="/tmp/problema.pddl"
 LOCAL_DOMINIO="/tmp/domain.pddl"
 LOCAL_SAS_PLAN="/tmp/output_a190030879.sas"
 
-cat lightsout.py | sed -e "s@<alterar_planejador>@$PLANEJADOR@g" \
+ARGS="$@"
+PLANEJADOR_COM_ARGS="${PLANEJADOR} ${ARGS}"
+
+cat lightsout.py | sed -e "s@<alterar_planejador>@$PLANEJADOR_COM_ARGS@g" \
                        -e "s@<alterar_local_problema>@$LOCAL_PROBLEMA@g" \
                        -e "s@<alterar_local_dominio>@$LOCAL_DOMINIO@g" \
                        -e "s@<alterar_local_sas_plan>@$LOCAL_SAS_PLAN@g" \

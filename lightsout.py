@@ -3,7 +3,7 @@ import sys
 import subprocess
 import glob
 
-PLANEJADOR = "<alterar_planejador>".split(' ')
+PLANEJADOR = "<alterar_planejador>".strip().split(' ')
 
 def inverte(mapa, x, y):
     if (x >= len(mapa) or x < 0) or (y >= len(mapa) or y < 0):
