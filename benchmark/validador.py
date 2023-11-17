@@ -1,4 +1,5 @@
-from pprint import pprint
+import pprint
+import sys
 
 
 def inverte(mapa, x, y):
@@ -20,34 +21,31 @@ def apertar(mapa, x, y):
         inverte(mapa, x, y)
 
 
-def main():
+def valida_jogadas(jogadas_entrada, mapa_entrada, retornar_mapa_final=False):
+    if not jogadas_entrada:
+        return False
+
     mapa = []
-    with open('input', 'r') as f:
+    with open(mapa_entrada, 'r') as f:
+        f.seek(0)
         for linha in f.readlines():
             mapa.append([*linha[:-1]])
 
-    pprint(f'----------------==[Mapa Original]==----------------')
-    pprint(mapa)
-    print()
-
     jogadas = 0
-    with open('passos', 'r') as f:
-        for instrucao in f.readline().split(';'):
-            apertar(mapa, int(instrucao[1]), int(instrucao[4]))
-            jogadas += 1
+    for instrucao in jogadas_entrada.split(';'):
+        apertar(mapa, int(instrucao[1]), int(instrucao[4]))
+        jogadas += 1
 
-    pprint(f'----------------==[Jogada Final ({jogadas})]==----------------')
-    pprint(mapa)
-
-    resultado = 'VITORIA :>'
     for linha in range(len(mapa)):
         for coluna in range(len(mapa)):
             if mapa[linha][coluna] in ['l', 'L']:
-                resultado = 'TEM LAMPADA LIGADA, QUE ABALO :<'
-                break
-
-    print(f'\n{resultado} - mapa {len(mapa)}x{len(mapa)}')
+                if retornar_mapa_final:
+                    return False, mapa
+                return False
+    return True
 
 
 if __name__ == "__main__":
-    main()
+    retorno = valida_jogadas(sys.argv[1], sys.argv[2], retornar_mapa_final=True)
+    if isinstance(retorno, tuple):
+        print('\n'.join([''.join(r) for r in retorno[1]]))
