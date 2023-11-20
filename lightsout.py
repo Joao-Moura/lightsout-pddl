@@ -96,8 +96,10 @@ def main():
 
     resposta = []
     with open(files[-1], 'r') as f:
-        # for line in f.readlines()[:-1]:
         for line in f.readlines():
+            if 'apertar' not in line.lower():
+                continue
+
             x = re.findall(r'x\d{1,2}?', line)
             y = re.findall(r'y\d{1,2}?', line)
 
